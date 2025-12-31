@@ -217,6 +217,22 @@ services:
     networks:
       - iceberg_net
 
+  trino:
+    image: trinodb/trino:latest
+    container_name: trino
+    networks:
+      - iceberg_net
+    environment:
+      - TRINO_USER=admin
+      - TRINO_PASSWORD=admin
+    ports:
+      - 8080:8080
+    depends_on:
+      - rest
+      - minio
+    volumes:
+      - ./trino/iceberg.properties:/etc/trino/catalog/iceberg.properties
+
 networks:
   iceberg_net:
     driver: bridge
