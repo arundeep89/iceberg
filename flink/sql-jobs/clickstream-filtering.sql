@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS clickstream_source (
 ) WITH (
     'connector' = 'kafka',
     'topic' = 'clickstream',
-    'properties.bootstrap.servers' = 'broker:29092',
+    'properties.bootstrap.servers' = 'kafka:29092',
     'scan.startup.mode' = 'earliest-offset',
     'format' = 'json',
     'json.ignore-parse-errors' = 'true',

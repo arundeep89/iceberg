@@ -10,10 +10,10 @@ services:
     networks:
       - iceberg_net
 
-  broker:
+  kafka:
     image: confluentinc/cp-server:7.2.1
     hostname: kafka
-    container_name: broker
+    container_name: kafka
     depends_on:
       - zookeeper
     ports:
@@ -29,7 +29,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
@@ -40,7 +40,7 @@ services:
 
       # Metrics and telemetry configurations
       KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
-      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka:29092
       CONFLUENT_METRICS_ENABLE: 'false'
       CONFLUENT_TELEMETRY_ENABLED: 'false'  # Ensure telemetry is fully disabled
       KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
@@ -56,11 +56,11 @@ services:
     hostname: control-center
     container_name: control-center
     depends_on:
-      - broker
+      - kafka
     ports:
       - 9021:9021
     environment:
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:29092'
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
@@ -74,9 +74,9 @@ services:
     build:
       context: ./producer
     depends_on:
-      - broker
+      - kafka
     environment:
-      KAFKA_BROKER: broker:29092
+      KAFKA_BROKER: kafka:29092
     networks:
       - iceberg_net
 

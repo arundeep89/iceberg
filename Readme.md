@@ -3,14 +3,42 @@ Reference:
 - https://www.dremio.com/blog/using-flink-with-apache-iceberg-and-nessie/ (using nessie catalog, java flink job)
 
 
-### Access the Services**
+**📖 Overview**
+---------------
+
+This project demonstrates a **real-time end-to-end (E2E) data pipeline** designed to handle clickstream data. It shows how to ingest, process, store, query, and visualize streaming data using open-source tools, all containerized with Docker for easy deployment.
+
+🔎 **Technologies Used:**
+
+-   **Data Ingestion:** [Apache Kafka](https://kafka.apache.org/)  
+-   **Stream Processing:** [Apache Flink](https://flink.apache.org/)  
+-   **Object Storage:** [MinIO (S3-compatible)](https://min.io/)
+-   **Data Lake Table Format:** [Apache Iceberg](https://iceberg.apache.org/)  
+-   **Query Engine:** [Trino](https://trino.io/)  
+-   **Visualization:** [Apache Superset](https://superset.apache.org/)    
+
+
+**🔧 Setup Instructions**
+-------------------------
+### Start All Services
+
+```bash
+docker compose up -d
+or
+docker compose -f docker-compose-kraft.yml up -d
+```
+
+⚠️ **Note:** All components (Kafka, Flink, Iceberg, Trino, MinIO, and Superset) are containerized using Docker for easy deployment and scalabilit
+
+
+### Access the Services
 
 | **Service** | **URL** | **Credentials** |
 | --- | --- | --- |
-| **Kafka Control Center** | `http://localhost:9021` | *No Auth* |
+| **Kafka Control Center/UI** | `http://localhost:9021` | *No Auth* |
 | **Flink Dashboard** | `http://localhost:18081` | *No Auth* |
 | **MinIO Console** | `http://localhost:9001` | `admin` / `password` |
-| **Trino UI** | `http://localhost:8080/ui` | *No Auth* |
+| **Trino UI** | `http://localhost:8080/ui` | `admin` |
 | **Superset** | `http://localhost:8088` | `admin` / `admin` |
 
 
