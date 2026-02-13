@@ -80,4 +80,21 @@ LIMIT 10;
     2.  Go to **Data** → **Databases** → **+**
     3.  Use the above SQLAlchemy URI.
 
-2.  **Create Dashboards:**
+**🔍 Query Data with DuckDB (under development)**
+----------------------------
+    
+    ```bash
+    docker exec -it duckdb-cli duckdb my_database.duckdb
+    
+    Connected to a transient in-memory database.
+    Use ".open FILENAME" to reopen on a persistent database.
+    D .open ./sample.db
+    D CREATE TABLE table_sample(timestamp TIMESTAMP, description TEXT);
+    D INSERT INTO table_sample VALUES(NOW(),'First sample data. Foo');
+    D INSERT INTO table_sample VALUES(NOW(),'Second sample data. Bar');
+    D FROM table_sample;
+    D .quit
+    $ ls
+    sample.db
+    ```
+Ref: [DuckDB Docker](https://github.com/duckdb/duckdb-docker)
